@@ -6,9 +6,27 @@ export type ContactsControllerOptions = {
 };
 
 class ContactsController {
-  contacts: ContactsCollection = {};
-  constructor() {}
-  processOptions(options: ContactsControllerOptions) {}
+  contacts: ContactsCollection;
+
+  constructor() {
+    this.contacts = new ContactsCollection();
+    this.contacts.load();
+  }
+
+  processOptions(options: ContactsControllerOptions) {
+    if (options.action === "get" && !options.params) {
+      return this.contacts.getAll();
+    }
+    if (options.action === "get" && options.params) {
+      return this.contacts.getOneById(options.params);
+    }
+    if (options.action === "save") {
+      this.contacts.addOne(JSON.parse(options.params));
+      this.contacts.save();
+      return true;
+    }
+    return null;
+  }
 }
 
 export { ContactsController };
