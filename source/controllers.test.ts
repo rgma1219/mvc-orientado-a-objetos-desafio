@@ -31,7 +31,7 @@ test("Testeo el método processOptions: save", (t) => {
   const contactoNuevo = { id: 10, name: "Gabriel" };
   const opcion: ContactsControllerOptions = {
     action: "save",
-    params: contactoNuevo,
+    params: JSON.stringify(contactoNuevo),
   };
   controller.processOptions(opcion);
   const listaContactos = controller.contacts.getAll();
