@@ -14,18 +14,19 @@ class ContactsController {
   }
 
   processOptions(options: ContactsControllerOptions) {
+    let resultado;
     if (options.action === "get" && !options.params) {
-      return this.contacts.getAll();
+      resultado = this.contacts.getAll();
     }
     if (options.action === "get" && options.params) {
-      return this.contacts.getOneById(options.params);
+      resultado = this.contacts.getOneById(options.params.id);
     }
     if (options.action === "save") {
-      this.contacts.addOne(JSON.parse(options.params));
+      this.contacts.addOne(options.params);
       this.contacts.save();
-      return true;
+      resultado = "Se ha guardado";
     }
-    return null;
+    return resultado;
   }
 }
 

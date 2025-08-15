@@ -19,9 +19,12 @@ test("Testeo el método processOptions: get total", (t) => {
 
 test("Testeo el método processOptions: get por id", (t) => {
   const controller = new ContactsController();
-  const opcion: ContactsControllerOptions = { action: "get", params: 1 };
+  const opcion: ContactsControllerOptions = {
+    action: "get",
+    params: { id: 1 },
+  };
   const data = controller.processOptions(opcion);
-  const original = controller.contacts.getOneById(opcion.params);
+  const original = controller.contacts.getOneById(opcion.params.id);
   t.deepEqual(data, original);
 });
 
@@ -31,7 +34,7 @@ test("Testeo el método processOptions: save", (t) => {
   const contactoNuevo = { id: 10, name: "Gabriel" };
   const opcion: ContactsControllerOptions = {
     action: "save",
-    params: JSON.stringify(contactoNuevo),
+    params: contactoNuevo,
   };
   controller.processOptions(opcion);
   const listaContactos = controller.contacts.getAll();
